@@ -3,6 +3,8 @@ import { MySQLAuthElement, MySQLAuthPermissions } from './index.mjs';
 
 export default function (options = {}) {
   return async function (req, res, next) {
+    !req.p ? (req.p = {}) : null;
+
     const kid =
       req.headers['Authorization'] ||
       req.headers['O'] ||

@@ -76,6 +76,22 @@ export default class MySQLAuthPermissions extends MySQLClass {
   static hasPermission(perms, perm) {
     return has(perms, perm);
   }
+
+  static mapArray = [];
+
+  static setMap(map, prefix = '') {
+    function pa(obj, prefix = '') {
+      for (const key in obj) {
+        MySQLAuthPermissions.mapArray.push(prefix + key);
+        obj[key] != {} ? pa(obj[key], prefix + key + '.') : null;
+      }
+    }
+    pa(map, prefix);
+  }
+
+  static getMap() {
+    return MySQLAuthPermissions.mapArray;
+  }
 }
 
 function has(perms, perm) {

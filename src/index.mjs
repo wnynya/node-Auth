@@ -7,7 +7,7 @@ import {
 } from './mysql/index.mjs';
 import { setMySQLClient } from './mysql/index.mjs';
 import ExpressSession from './mysql/express-middleware-session.mjs';
-import ExpressAccounts from './mysql/express-middleware-accounts.mjs';
+import ExpressAccount from './mysql/express-middleware-account.mjs';
 
 export {
   MySQLAuthElement,
@@ -18,7 +18,14 @@ export {
 };
 
 export default {
+  MySQLAuthElement,
+  MySQLAuthPermissions,
+  MySQLAuthAccount,
+  MySQLAuthSession,
+  MySQLAuthKey,
   session: ExpressSession,
-  accounts: ExpressAccounts,
+  account: ExpressAccount,
   setMySQLClient: setMySQLClient,
+  setPermissionsMap: MySQLAuthPermissions.setMap,
+  getPermissionsMap: MySQLAuthPermissions.getMap,
 };

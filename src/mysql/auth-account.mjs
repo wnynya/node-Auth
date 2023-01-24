@@ -171,6 +171,19 @@ export default class MySQLAuthAccount extends MySQLClass {
     return keys;
   }
 
+  toJSON() {
+    return {
+      uid: account.element.uid,
+      label: account.element.label,
+      creation: account.element.creation.getTime(),
+      lastused: account.element.lastused.getTime(),
+      eid: account.eid,
+      email: account.email,
+      phone: account.phone,
+      permissions: account.element.permissions.array,
+    };
+  }
+
   static async of(string) {
     const res = await mysql.query({
       statement: 'SELECT',
@@ -200,7 +213,13 @@ export default class MySQLAuthAccount extends MySQLClass {
     return account;
   }
 
-  static async index(search, size = 20, page = 1, toJSON = false) {
+  static async index(
+    search,
+    size = 20,
+    page = 1,
+    count = false,
+    toJSON = false
+  ) {
     const res = await mysql.query({
       statement: 'SELECT',
       table: table.accounts,
@@ -221,6 +240,7 @@ export default class MySQLAuthAccount extends MySQLClass {
       like: true,
       size: size,
       page: page,
+      count: count,
     });
 
     let accounts = [];

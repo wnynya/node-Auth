@@ -5,6 +5,8 @@ export default function (options = {}) {
   options.cookie = options.cookie ? options.cookie : {};
 
   return async function (req, res, next) {
+    !req.p ? (req.p = {}) : null;
+
     let sid = req.cookies[options.name];
     let session = new MySQLAuthSession(sid);
 
