@@ -32,7 +32,7 @@ export default class MySQLAuthPermissions extends MySQLClass {
     await this.selectQuery(parts);
   }
 
-  async update(parts) {
+  async update(parts = ['array']) {
     await this.updateQuery(parts);
   }
 
@@ -55,7 +55,7 @@ export default class MySQLAuthPermissions extends MySQLClass {
     this.array.sort();
   }
 
-  delete(perms) {
+  del(perms) {
     if (perms instanceof String) {
       perms = [perms];
     }

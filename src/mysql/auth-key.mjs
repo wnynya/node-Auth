@@ -54,4 +54,15 @@ export default class MySQLAuthKey extends MySQLClass {
   async delete() {
     await this.deleteQuery();
   }
+
+  toJSON() {
+    return {
+      uid: this.element.uid,
+      label: this.element.label,
+      creation: this.element.creation.getTime(),
+      lastused: this.element.lastused.getTime(),
+      expire: this.expire.getTime(),
+      permissions: this.element.permissions.array,
+    };
+  }
 }

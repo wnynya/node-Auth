@@ -99,7 +99,8 @@ export default class MySQLAuthAccount extends MySQLClass {
     if (toJSON) {
       const sessionsJSON = [];
       for (const session of sessions) {
-        sessionsJSON.push({
+        sessionsJSON.push(session.toSchemaJSON());
+        /*sessionsJSON.push({
           sid: session.sid,
           creation: session.creation.getTime(),
           lastused: session.lastused.getTime(),
@@ -108,12 +109,22 @@ export default class MySQLAuthAccount extends MySQLClass {
           browser: session.browser,
           system: session.system,
           ip: session.ip,
-        });
+        });*/
       }
       sessions = sessionsJSON;
     }
 
     return sessions;
+  }
+
+  async clearSessions() {
+    await mysql.query({
+      statement: 'DELETE',
+      table: table.sessions,
+      filter: {
+        account: this.element.uid,
+      },
+    });
   }
 
   async insertKey(expire = 0) {
@@ -156,14 +167,15 @@ export default class MySQLAuthAccount extends MySQLClass {
     if (toJSON) {
       const keysJSON = [];
       for (const key of keys) {
-        keysJSON.push({
+        keysJSON.push(key.toJSON());
+        /*keysJSON.push({
           uid: key.element.uid,
           label: key.element.label,
           creation: key.element.creation.getTime(),
           lastused: key.element.lastused.getTime(),
           expire: key.expire.getTime(),
           permissions: key.element.permissions.array,
-        });
+        });*/
       }
       keys = keysJSON;
     }
@@ -257,7 +269,8 @@ export default class MySQLAuthAccount extends MySQLClass {
     if (toJSON) {
       const accountsJSON = [];
       for (const account of accounts) {
-        accountsJSON.push({
+        accountsJSON.push(account.toJSON());
+        /*accountsJSON.push({
           uid: account.element.uid,
           label: account.element.label,
           creation: account.element.creation.getTime(),
@@ -266,7 +279,7 @@ export default class MySQLAuthAccount extends MySQLClass {
           email: account.email,
           phone: account.phone,
           permissions: account.element.permissions.array,
-        });
+        });*/
       }
       accounts = accountsJSON;
     }
