@@ -1,4 +1,4 @@
-import MysqlAuthKey from './auth-key.mjs';
+import MySQLAuthKey from './auth-key.mjs';
 import { MySQLAuthElement, MySQLAuthPermissions } from './index.mjs';
 
 export default function (options = {}) {
@@ -21,10 +21,16 @@ export default function (options = {}) {
 
     let kiv = false;
     if (kid) {
-      key = new MysqlAuthKey(new MySQLAuthElement(kid));
+      key = new MySQLAuthKey(new MySQLAuthElement(kid));
       await key.select().catch(() => {
         kiv = true;
       });
+      if (0 < key.expire && key.expire.getTime() < new Date().getTime()) {
+        kiv = true;
+      }
+
+      key.element.lastused = new Date();
+      await key.element.update(['lastused']);
       account = key.account;
       permissions = key.element.permissions;
     }

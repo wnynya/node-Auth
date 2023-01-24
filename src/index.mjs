@@ -3,18 +3,18 @@ import {
   MySQLAuthPermissions,
   MySQLAuthAccount,
   MySQLAuthSession,
-  MysqlAuthKey,
+  MySQLAuthKey,
 } from './mysql/index.mjs';
 import { setMySQLClient } from './mysql/index.mjs';
 import ExpressSession from './mysql/express-middleware-session.mjs';
 import ExpressAccounts from './mysql/express-middleware-accounts.mjs';
 
 export {
-  MySQLAuthElement as MysqlAuthElement,
+  MySQLAuthElement,
   MySQLAuthPermissions,
   MySQLAuthAccount,
   MySQLAuthSession,
-  MysqlAuthKey,
+  MySQLAuthKey,
 };
 
 export default {

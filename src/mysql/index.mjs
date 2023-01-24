@@ -1,17 +1,17 @@
 import { MySQLClient } from '@wnynya/mysql-client';
 
-import MysqlAuthElement from './auth-element.mjs';
+import MySQLAuthElement from './auth-element.mjs';
 import MySQLAuthPermissions from './auth-permissions.mjs';
 import MySQLAuthAccount from './auth-account.mjs';
 import MySQLAuthSession from './auth-session.mjs';
-import MysqlAuthKey from './auth-key.mjs';
+import MySQLAuthKey from './auth-key.mjs';
 
 export {
-  MysqlAuthElement as MySQLAuthElement,
+  MySQLAuthElement,
   MySQLAuthPermissions,
   MySQLAuthAccount,
   MySQLAuthSession,
-  MysqlAuthKey,
+  MySQLAuthKey,
 };
 
 let MySQL;

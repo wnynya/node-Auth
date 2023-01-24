@@ -2,7 +2,7 @@ import Crypto from '@wnynya/crypto';
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
 import MySQLAuthAccount from './auth-account.mjs';
-import MysqlAuthElement from './auth-element.mjs';
+import MySQLAuthElement from './auth-element.mjs';
 
 export default class MySQLAuthSession extends MySQLClass {
   constructor(sid = Crypto.uid()) {
@@ -31,7 +31,7 @@ export default class MySQLAuthSession extends MySQLClass {
         (uid) => {
           return uid == ''
             ? uid
-            : new MySQLAuthAccount(new MysqlAuthElement(uid));
+            : new MySQLAuthAccount(new MySQLAuthElement(uid));
         },
         (acn) => {
           return acn == '' ? acn : acn.element.uid;
@@ -52,7 +52,7 @@ export default class MySQLAuthSession extends MySQLClass {
     await this.insertQuery();
   }
 
-  async select(parts) {
+  async select(parts = '*') {
     await this.selectQuery(parts);
     this.new = false;
   }

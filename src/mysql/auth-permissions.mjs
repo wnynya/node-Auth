@@ -1,6 +1,6 @@
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
-import MysqlAuthElement from './auth-element.mjs';
+import MySQLAuthElement from './auth-element.mjs';
 
 export default class MySQLAuthPermissions extends MySQLClass {
   constructor(element) {
@@ -13,7 +13,7 @@ export default class MySQLAuthPermissions extends MySQLClass {
     this.schema = {
       element: [
         (uid) => {
-          return new MysqlAuthElement(uid);
+          return new MySQLAuthElement(uid);
         },
         (elm) => {
           return elm.uid;

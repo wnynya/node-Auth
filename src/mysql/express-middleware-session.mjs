@@ -42,11 +42,14 @@ export default function (options = {}) {
     }
 
     req.session.save = async (maxAge = 0, account) => {
+      const sac = req.session.account;
+      delete req.session.account;
       const data = JSON.parse(JSON.stringify(req.session));
       delete data.id;
       delete data.save;
       delete data.destroy;
       session.data = data;
+      req.session.account = sac;
 
       // set session id cookie
       const opt = JSON.parse(JSON.stringify(options.cookie));

@@ -3,7 +3,7 @@ import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
 import MySQLAuthPermissions from './auth-permissions.mjs';
 
-export default class MysqlAuthElement extends MySQLClass {
+export default class MySQLAuthElement extends MySQLClass {
   constructor(uid = Crypto.uid()) {
     super(mysql);
 

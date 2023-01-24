@@ -37,15 +37,7 @@ app.get('/', (req, res) => {
   res.ok(data);
 });
 
-app.get('/save', (req, res) => {
-  console.log('save');
-  req.session.test = 'aaa';
-  req.session.save();
-  res.ok('save');
-});
-
 app.get('/destroy', (req, res) => {
-  console.log('dest');
   req.session.destroy();
   res.ok('destroy');
 });
@@ -54,13 +46,32 @@ app.get('/login', (req, res) => {
   MySQLAuthAccount.of('tester')
     .then((account) => {
       if (account.verify('123456')) {
-        console.log(account.element.permissions);
         req.session.save(0, account);
         res.ok('login');
       } else {
         res.error('auth401');
       }
     })
+    .catch(res.error);
+});
+
+app.get('/index', (req, res) => {
+  MySQLAuthAccount.index(req.query.search, req.query.size, req.query.page, true)
+    .then(res.data)
+    .catch(res.error);
+});
+
+app.get('/keys', (req, res) => {
+  req.session.account
+    .selectKeys(req.query.size, req.query.page, true)
+    .then(res.data)
+    .catch(res.error);
+});
+
+app.get('/sessions', (req, res) => {
+  req.session.account
+    .selectSessions(req.query.size, req.query.page, true)
+    .then(res.data)
     .catch(res.error);
 });
 
