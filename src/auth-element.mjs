@@ -1,9 +1,9 @@
 import Crypto from '@wnynya/crypto';
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
-import MySQLAuthPermissions from './auth-permissions.mjs';
+import AuthPermissions from './auth-permissions.mjs';
 
-export default class MySQLAuthElement extends MySQLClass {
+export default class AuthElement extends MySQLClass {
   constructor(uid = Crypto.uid()) {
     super(mysql);
 
@@ -21,7 +21,7 @@ export default class MySQLAuthElement extends MySQLClass {
     };
     this.filter = { uid: this.uid };
 
-    this.permissions = new MySQLAuthPermissions(this);
+    this.permissions = new AuthPermissions(this);
   }
 
   async insert() {

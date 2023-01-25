@@ -1,6 +1,6 @@
 {
   "name": "@wnynya/auth",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "author": "Wany <sung@wany.io> (https://wany.io)",
   "main": "src/index.mjs",
   "dependencies": {

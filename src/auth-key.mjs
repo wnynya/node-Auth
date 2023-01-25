@@ -1,9 +1,9 @@
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
-import MySQLAuthElement from './auth-element.mjs';
-import MySQLAuthAccount from './auth-account.mjs';
+import AuthElement from './auth-element.mjs';
+import AuthAccount from './auth-account.mjs';
 
-export default class MySQLAuthKey extends MySQLClass {
+export default class AuthKey extends MySQLClass {
   constructor(element) {
     super(mysql);
 
@@ -15,7 +15,7 @@ export default class MySQLAuthKey extends MySQLClass {
     this.schema = {
       element: [
         (uid) => {
-          return new MySQLAuthElement(uid);
+          return new AuthElement(uid);
         },
         (elm) => {
           return elm.uid;
@@ -23,7 +23,7 @@ export default class MySQLAuthKey extends MySQLClass {
       ],
       account: [
         (uid) => {
-          return new MySQLAuthAccount(new MySQLAuthElement(uid));
+          return new AuthAccount(new AuthElement(uid));
         },
         (acn) => {
           return acn.element.uid;

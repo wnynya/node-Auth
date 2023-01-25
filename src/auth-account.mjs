@@ -1,11 +1,11 @@
 import Crypto from '@wnynya/crypto';
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
-import MySQLAuthElement from './auth-element.mjs';
-import MySQLAuthKey from './auth-key.mjs';
-import MySQLAuthSession from './auth-session.mjs';
+import AuthElement from './auth-element.mjs';
+import AuthKey from './auth-key.mjs';
+import AuthSession from './auth-session.mjs';
 
-export default class MySQLAuthAccount extends MySQLClass {
+export default class AuthAccount extends MySQLClass {
   constructor(element) {
     super(mysql);
 
@@ -21,7 +21,7 @@ export default class MySQLAuthAccount extends MySQLClass {
     this.schema = {
       element: [
         (uid) => {
-          return new MySQLAuthElement(uid);
+          return new AuthElement(uid);
         },
         (elm) => {
           return elm.uid;
@@ -107,7 +107,7 @@ export default class MySQLAuthAccount extends MySQLClass {
     const tasks = [];
 
     for (const data of res) {
-      const session = new MySQLAuthSession(data.sid);
+      const session = new AuthSession(data.sid);
       sessions.push(session);
       tasks.push(session.select());
     }
@@ -136,7 +136,7 @@ export default class MySQLAuthAccount extends MySQLClass {
   }
 
   async selectSession(sid) {
-    const session = new MySQLAuthSession(sid);
+    const session = new AuthSession(sid);
     await session.select();
 
     if (session.account != this.element.uid) {
@@ -157,7 +157,7 @@ export default class MySQLAuthAccount extends MySQLClass {
   }
 
   async insertKey(expire = 0) {
-    const key = new MySQLAuthKey(new MySQLAuthElement());
+    const key = new AuthKey(new AuthElement());
     key.account = this;
     key.expire = 0;
 
@@ -172,7 +172,7 @@ export default class MySQLAuthAccount extends MySQLClass {
       table: table.keys,
       imports: {
         element: (uid) => {
-          return new MySQLAuthElement(uid);
+          return new AuthElement(uid);
         },
       },
       filter: {
@@ -186,7 +186,7 @@ export default class MySQLAuthAccount extends MySQLClass {
     const tasks = [];
 
     for (const data of res) {
-      const key = new MySQLAuthKey(data.element);
+      const key = new AuthKey(data.element);
       keys.push(key);
       tasks.push(key.select());
     }
@@ -213,7 +213,7 @@ export default class MySQLAuthAccount extends MySQLClass {
   }
 
   async selectKey(kid) {
-    const key = new MySQLAuthKey(new MySQLAuthElement(kid));
+    const key = new AuthKey(new AuthElement(kid));
     await key.select();
 
     if (key.account != this.element.uid) {
@@ -245,7 +245,7 @@ export default class MySQLAuthAccount extends MySQLClass {
       throw 'default404';
     }
 
-    const account = new MySQLAuthAccount(new MySQLAuthElement(uid));
+    const account = new AuthAccount(new AuthElement(uid));
 
     await account.select();
 
@@ -264,7 +264,7 @@ export default class MySQLAuthAccount extends MySQLClass {
       table: table.accounts,
       imports: {
         element: (uid) => {
-          return new MySQLAuthElement(uid);
+          return new AuthElement(uid);
         },
       },
       filter:
@@ -286,7 +286,7 @@ export default class MySQLAuthAccount extends MySQLClass {
     const tasks = [];
 
     for (const data of res) {
-      const account = new MySQLAuthAccount(data.element);
+      const account = new AuthAccount(data.element);
       accounts.push(account);
       tasks.push(account.select());
     }

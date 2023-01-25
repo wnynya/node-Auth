@@ -1,10 +1,10 @@
 import Crypto from '@wnynya/crypto';
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
-import MySQLAuthAccount from './auth-account.mjs';
-import MySQLAuthElement from './auth-element.mjs';
+import AuthAccount from './auth-account.mjs';
+import AuthElement from './auth-element.mjs';
 
-export default class MySQLAuthSession extends MySQLClass {
+export default class AuthSession extends MySQLClass {
   constructor(sid = Crypto.uid()) {
     super(mysql);
 
@@ -29,9 +29,7 @@ export default class MySQLAuthSession extends MySQLClass {
       expire: 'date',
       account: [
         (uid) => {
-          return uid == ''
-            ? uid
-            : new MySQLAuthAccount(new MySQLAuthElement(uid));
+          return uid == '' ? uid : new AuthAccount(new AuthElement(uid));
         },
         (acn) => {
           return acn == '' ? acn : acn.element.uid;

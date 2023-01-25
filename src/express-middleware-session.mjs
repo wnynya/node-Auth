@@ -1,4 +1,4 @@
-import MySQLAuthSession from './auth-session.mjs';
+import { AuthSession } from './index.mjs';
 
 export default function (options = {}) {
   options.name = options.name ? options.name : 'session';
@@ -9,7 +9,7 @@ export default function (options = {}) {
 
     // 쿠키에서 세션 ID 가져오기
     let sid = req.cookies[options.name];
-    let session = new MySQLAuthSession(sid);
+    let session = new AuthSession(sid);
 
     // 세션 ID 가 있는 경우
     if (sid) {
@@ -18,7 +18,7 @@ export default function (options = {}) {
         .select(['data', 'expire', 'ip', 'ips', 'account'])
         .catch((error) => {
           // 저장된 값이 없는 경우, 새로운 세션 대입
-          session = new MySQLAuthSession();
+          session = new AuthSession();
           session.new = true;
         });
     }

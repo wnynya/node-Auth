@@ -1,5 +1,4 @@
-import MySQLAuthKey from './auth-key.mjs';
-import { MySQLAuthElement, MySQLAuthPermissions } from './index.mjs';
+import { AuthElement, AuthKey, AuthPermissions } from './index.mjs';
 
 export default function (options = {}) {
   return async function (req, res, next) {
@@ -21,14 +20,14 @@ export default function (options = {}) {
     req.permissions = []; // 요청에 권한 노드가 존재하지 않음
     // 요청 권한 확인 함수
     req.hasPermission = (perm) => {
-      return MySQLAuthPermissions.hasPermission(req.permissions, perm);
+      return AuthPermissions.hasPermission(req.permissions, perm);
     };
 
     // 키 값이 있는 경우
     let kiv = false;
     if (kid) {
       // 키 값이 존재하는지 확인 / 정보 불러오기
-      key = new MySQLAuthKey(new MySQLAuthElement(kid));
+      key = new AuthKey(new AuthElement(kid));
       await key.select().catch(() => {
         kiv = true;
       });

@@ -1,8 +1,8 @@
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
-import MySQLAuthElement from './auth-element.mjs';
+import AuthElement from './auth-element.mjs';
 
-export default class MySQLAuthPermissions extends MySQLClass {
+export default class AuthPermissions extends MySQLClass {
   constructor(element) {
     super(mysql);
 
@@ -13,7 +13,7 @@ export default class MySQLAuthPermissions extends MySQLClass {
     this.schema = {
       element: [
         (uid) => {
-          return new MySQLAuthElement(uid);
+          return new AuthElement(uid);
         },
         (elm) => {
           return elm.uid;
@@ -82,7 +82,7 @@ export default class MySQLAuthPermissions extends MySQLClass {
   static setMap(map, prefix = '') {
     function pa(obj, prefix = '') {
       for (const key in obj) {
-        MySQLAuthPermissions.mapArray.push(prefix + key);
+        AuthPermissions.mapArray.push(prefix + key);
         obj[key] != {} ? pa(obj[key], prefix + key + '.') : null;
       }
     }
@@ -90,7 +90,7 @@ export default class MySQLAuthPermissions extends MySQLClass {
   }
 
   static getMap() {
-    return MySQLAuthPermissions.mapArray;
+    return AuthPermissions.mapArray;
   }
 }
 
