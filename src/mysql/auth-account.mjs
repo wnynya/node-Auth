@@ -56,11 +56,29 @@ export default class MySQLAuthAccount extends MySQLClass {
     await this.updateQuery(parts);
   }
 
+  async updatePassword(password) {
+    this.hash = this.crypt(password);
+    await this.update(['hash']);
+  }
+
   async delete() {
     await this.element.delete();
     await this.sessions.clear();
     await this.keys.clear();
     await this.deleteQuery();
+  }
+
+  toJSON() {
+    return {
+      uid: account.element.uid,
+      label: account.element.label,
+      creation: account.element.creation.getTime(),
+      lastused: account.element.lastused.getTime(),
+      eid: account.eid,
+      email: account.email,
+      phone: account.phone,
+      permissions: account.element.permissions.array,
+    };
   }
 
   crypt(string) {
@@ -115,6 +133,17 @@ export default class MySQLAuthAccount extends MySQLClass {
     }
 
     return sessions;
+  }
+
+  async selectSession(sid) {
+    const session = new MySQLAuthSession(sid);
+    await session.select();
+
+    if (session.account != this.element.uid) {
+      throw 'session404';
+    }
+
+    return session;
   }
 
   async clearSessions() {
@@ -183,17 +212,15 @@ export default class MySQLAuthAccount extends MySQLClass {
     return keys;
   }
 
-  toJSON() {
-    return {
-      uid: account.element.uid,
-      label: account.element.label,
-      creation: account.element.creation.getTime(),
-      lastused: account.element.lastused.getTime(),
-      eid: account.eid,
-      email: account.email,
-      phone: account.phone,
-      permissions: account.element.permissions.array,
-    };
+  async selectKey(kid) {
+    const key = new MySQLAuthKey(new MySQLAuthElement(kid));
+    await key.select();
+
+    if (key.account != this.element.uid) {
+      throw 'key404';
+    }
+
+    return key;
   }
 
   static async of(string) {

@@ -65,6 +65,19 @@ export default class MySQLAuthSession extends MySQLClass {
     await this.deleteQuery();
   }
 
+  toJSON() {
+    return {
+      sid: this.sid,
+      creation: this.creation.getTime(),
+      lastused: this.lastused.getTime(),
+      expire: this.expire.getTime(),
+      agent: this.agent,
+      browser: this.browser,
+      system: this.system,
+      ip: this.ip,
+    };
+  }
+
   async save(account) {
     if (account) {
       this.account = account;
@@ -103,18 +116,5 @@ export default class MySQLAuthSession extends MySQLClass {
 
   async destroy() {
     await this.delete();
-  }
-
-  toJSON() {
-    return {
-      sid: this.sid,
-      creation: this.creation.getTime(),
-      lastused: this.lastused.getTime(),
-      expire: this.expire.getTime(),
-      agent: this.agent,
-      browser: this.browser,
-      system: this.system,
-      ip: this.ip,
-    };
   }
 }

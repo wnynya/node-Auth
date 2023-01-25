@@ -1,16 +1,8 @@
 {
   "name": "@wnynya/auth",
-  "version": "0.1.6",
-  "description": "",
+  "version": "0.1.8",
+  "author": "Wany <sung@wany.io> (https://wany.io)",
   "main": "src/index.mjs",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@wnynya/crypto": "^0.1.1",
     "@wnynya/mysql-client": "^0.2.10"

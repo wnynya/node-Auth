@@ -51,10 +51,6 @@ export default class MySQLAuthKey extends MySQLClass {
     await this.updateQuery(parts);
   }
 
-  async delete() {
-    await this.deleteQuery();
-  }
-
   toJSON() {
     return {
       uid: this.element.uid,
@@ -64,5 +60,26 @@ export default class MySQLAuthKey extends MySQLClass {
       expire: this.expire.getTime(),
       permissions: this.element.permissions.array,
     };
+  }
+
+  async delete() {
+    await this.deleteQuery();
+  }
+
+  async safe() {
+    await this.select(['array']);
+    await this.account.select(['array']);
+    let changed = false;
+    const kperms = this.element.permissions.array;
+    for (const perm of kperms) {
+      if (!this.account.element.permissions.has(perm)) {
+        changed = true;
+        kperms.splice(kperms.indexOf(perm), 1);
+      }
+    }
+    if (changed) {
+      this.element.permissions.array = kperms;
+      await this.element.permissions.update(['array']);
+    }
   }
 }
