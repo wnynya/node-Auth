@@ -1,4 +1,5 @@
 import { AuthElement, AuthKey, AuthPermissions } from './index.mjs';
+import Crypto from '@wnynya/crypto';
 
 export default function (options = {}) {
   return async function (req, res, next) {
@@ -73,6 +74,9 @@ export default function (options = {}) {
     req.account.label = account.element.label;
     req.account.eid = account.eid;
     req.account.email = account.email;
+    req.account.gravatar = `https://www.gravatar.com/avatar/${new Crypto(
+      account.email
+    ).hash('md5')}`;
 
     if (key) {
       req.key = {};
