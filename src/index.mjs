@@ -27,8 +27,8 @@ const table = {
 };
 export { table };
 
-import ExpressSession from './mysql/express-middleware-session.mjs';
-import ExpressAccount from './mysql/express-middleware-account.mjs';
+import ExpressSession from './express-middleware-session.mjs';
+import ExpressAccount from './express-middleware-account.mjs';
 
 export default {
   AuthElement,
