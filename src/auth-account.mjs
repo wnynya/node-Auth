@@ -70,14 +70,14 @@ export default class AuthAccount extends MySQLClass {
 
   toJSON() {
     return {
-      uid: account.element.uid,
-      label: account.element.label,
-      creation: account.element.creation.getTime(),
-      lastused: account.element.lastused.getTime(),
-      eid: account.eid,
-      email: account.email,
-      phone: account.phone,
-      permissions: account.element.permissions.array,
+      uid: this.element.uid,
+      label: this.element.label,
+      creation: this.element.creation.getTime(),
+      lastused: this.element.lastused.getTime(),
+      eid: this.eid,
+      email: this.email,
+      phone: this.phone,
+      permissions: this.element.permissions.array,
     };
   }
 
