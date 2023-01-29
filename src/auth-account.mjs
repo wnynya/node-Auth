@@ -117,7 +117,7 @@ export default class AuthAccount extends MySQLClass {
     if (toJSON) {
       const sessionsJSON = [];
       for (const session of sessions) {
-        sessionsJSON.push(session.toSchemaJSON());
+        sessionsJSON.push(session.toJSON());
         /*sessionsJSON.push({
           sid: session.sid,
           creation: session.creation.getTime(),
