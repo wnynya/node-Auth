@@ -101,6 +101,9 @@ export default class AuthAccount extends MySQLClass {
       },
       size: size,
       page: page,
+      sort: {
+        creation: 'DESC',
+      },
     });
 
     let sessions = [];
