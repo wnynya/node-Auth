@@ -62,7 +62,7 @@ export default function (options = {}) {
     // 현재 요청의 권한 목록 담아두기
     // 인증된 키가 있을 경우 ? 키 권한 : 키가 없을 경우 = 계정 권한
     permissions =
-      code && kiv ? key.element.permissions : account.element.permissions;
+      code && !kiv ? key.element.permissions : account.element.permissions;
 
     // 요청 오브젝트에 담아서 넘기기
     req.login = true;
