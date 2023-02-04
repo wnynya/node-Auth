@@ -31,6 +31,7 @@ CREATE TABLE `auth_accounts` (
 DROP TABLE IF EXISTS `auth_keys`;
 CREATE TABLE `auth_keys` (
   `element` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `account` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expire` datetime NOT NULL,
   `meta` longtext COLLATE utf8mb4_unicode_ci DEFAULT '{}',

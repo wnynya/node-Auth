@@ -1,3 +1,4 @@
+import Crypto from '@wnynya/crypto';
 import { MySQLClass } from '@wnynya/mysql-client';
 import { mysql, table } from './index.mjs';
 import AuthElement from './auth-element.mjs';
@@ -8,6 +9,7 @@ export default class AuthKey extends MySQLClass {
     super(mysql);
 
     this.element = element;
+    this.code = new Crypto().uid();
     this.account = this.element.uid;
     this.expire = new Date(0);
 
@@ -21,6 +23,7 @@ export default class AuthKey extends MySQLClass {
           return elm.uid;
         },
       ],
+      code: 'string',
       account: [
         (uid) => {
           return new AuthAccount(new AuthElement(uid));
@@ -54,6 +57,7 @@ export default class AuthKey extends MySQLClass {
   toJSON() {
     return {
       uid: this.element.uid,
+      code: this.code,
       label: this.element.label,
       creation: this.element.creation.getTime(),
       lastused: this.element.lastused.getTime(),
@@ -81,5 +85,31 @@ export default class AuthKey extends MySQLClass {
       this.element.permissions.array = kperms;
       await this.element.permissions.update(['array']);
     }
+  }
+
+  static async code(string) {
+    const res = await mysql.query({
+      statement: 'SELECT',
+      table: table.keys,
+      imports: {
+        element: 'string',
+      },
+      filter: {
+        code: string,
+      },
+      single: true,
+    });
+
+    const uid = res.element;
+
+    if (!uid) {
+      throw 'default404';
+    }
+
+    const key = new AuthKey(new AuthElement(uid));
+
+    await key.select();
+
+    return key;
   }
 }

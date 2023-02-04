@@ -6,7 +6,7 @@ export default function (options = {}) {
     !req.p ? (req.p = {}) : null;
 
     // 요청에 키 값이 있는지 확인 (헤더, 쿼리)
-    const kid =
+    const code =
       req.headers['Authorization'] ||
       req.headers['O'] ||
       req.query.authorization ||
@@ -26,10 +26,9 @@ export default function (options = {}) {
 
     // 키 값이 있는 경우
     let kiv = false;
-    if (kid) {
+    if (code) {
       // 키 값이 존재하는지 확인 / 정보 불러오기
-      key = new AuthKey(new AuthElement(kid));
-      await key.select().catch(() => {
+      key = await AuthKey.code(code).catch(() => {
         kiv = true;
       });
       // 키가 만료되었는지 확인
@@ -44,7 +43,7 @@ export default function (options = {}) {
     }
 
     // 키 값이 없거나 invalid 한 키 값인 경우
-    if (!kid || kiv) {
+    if (!code || kiv) {
       // 세션이 없거나, 세션에 로그인 정보가 없는 경우
       if (!req.session || !req.session.account) {
         next();
@@ -63,7 +62,7 @@ export default function (options = {}) {
     // 현재 요청의 권한 목록 담아두기
     // 인증된 키가 있을 경우 ? 키 권한 : 키가 없을 경우 = 계정 권한
     permissions =
-      kid && kiv ? key.element.permissions : account.element.permissions;
+      code && kiv ? key.element.permissions : account.element.permissions;
 
     // 요청 오브젝트에 담아서 넘기기
     req.login = true;
