@@ -9,7 +9,7 @@ export default class AuthKey extends MySQLClass {
     super(mysql);
 
     this.element = element;
-    this.code = new Crypto().uid();
+    this.code = Crypto().randomString(42);
     this.account = this.element.uid;
     this.expire = new Date(0);
 
