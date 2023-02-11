@@ -6,13 +6,11 @@ export default function (options = {}) {
     !req.p ? (req.p = {}) : null;
 
     // 요청에 키 값이 있는지 확인 (헤더, 쿼리)
-    const code =
-      req.get('Authorization') ||
-      req.get('O') ||
-      req.get('authorization') ||
-      req.get('o') ||
-      req.query.authorization ||
-      req.query.o;
+    // 요청에 키 값이 있는지 확인 (헤더, 쿼리)
+    let code = req.header
+      ? req.header('Authorization') || req.header('Auth') || req.header('O')
+      : undefined;
+    code = code ? code : req.query.authorization || req.query.o;
 
     let account;
     let key;
