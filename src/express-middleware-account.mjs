@@ -7,8 +7,10 @@ export default function (options = {}) {
 
     // 요청에 키 값이 있는지 확인 (헤더, 쿼리)
     const code =
-      req.headers['Authorization'] ||
-      req.headers['O'] ||
+      req.get['Authorization'] ||
+      req.get['O'] ||
+      req.get['authorization'] ||
+      req.get['o'] ||
       req.query.authorization ||
       req.query.o;
 
