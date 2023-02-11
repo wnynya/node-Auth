@@ -43,11 +43,13 @@ export default function (options = {}) {
       ) {
         kiv = true;
       }
-      // 마지막 키 사용 시간 업데이트
-      key.element.lastused = new Date();
-      await key.element.update(['lastused']);
-      // 키의 계정 정보 대입 (세션의 로그인된 계정 정보를 사용하지 않음)
-      account = key.account;
+      if (!kiv) {
+        // 마지막 키 사용 시간 업데이트
+        key.element.lastused = new Date();
+        await key.element.update(['lastused']);
+        // 키의 계정 정보 대입 (세션의 로그인된 계정 정보를 사용하지 않음)
+        account = key.account;
+      }
     }
 
     // 키 값이 없거나 invalid 한 키 값인 경우
