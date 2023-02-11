@@ -31,8 +31,16 @@ export default function (options = {}) {
       key = await AuthKey.code(code).catch(() => {
         kiv = true;
       });
+      // 키가 존재하는지 확인
+      if (!kiv && key && !key.expire) {
+        kiv = true;
+      }
       // 키가 만료되었는지 확인
-      if (0 < key.expire && key.expire.getTime() < new Date().getTime()) {
+      if (
+        !kiv &&
+        0 < key.expire &&
+        key.expire.getTime() < new Date().getTime()
+      ) {
         kiv = true;
       }
       // 마지막 키 사용 시간 업데이트
