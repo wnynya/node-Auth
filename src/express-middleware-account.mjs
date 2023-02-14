@@ -83,9 +83,7 @@ export default function (options = {}) {
     req.account.label = account.element.label;
     req.account.eid = account.eid;
     req.account.email = account.email;
-    req.account.gravatar = `https://www.gravatar.com/avatar/${new Crypto(
-      account.email
-    ).hash('md5')}`;
+    req.account.gravatar = account.gravatar;
 
     if (key) {
       req.key = {};

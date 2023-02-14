@@ -49,6 +49,11 @@ export default class AuthAccount extends MySQLClass {
   async select(parts = '*') {
     await this.selectQuery(parts);
     await this.element.select(parts);
+    if (this.email) {
+      this.gravatar = `https://www.gravatar.com/avatar/${new Crypto(
+        this.email
+      ).hash('md5')}`;
+    }
   }
 
   async update(parts) {
@@ -77,6 +82,7 @@ export default class AuthAccount extends MySQLClass {
       eid: this.eid,
       email: this.email,
       phone: this.phone,
+      gravatar: this.gravatar,
       permissions: this.element.permissions.array,
     };
   }
