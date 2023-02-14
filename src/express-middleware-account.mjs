@@ -69,6 +69,10 @@ export default function (options = {}) {
       return;
     });
 
+    // 마지막 계정 사용 시간 업데이트
+    account.element.lastused = new Date();
+    await account.element.update(['lastused']);
+
     // 현재 요청의 권한 목록 담아두기
     // 인증된 키가 있을 경우 ? 키 권한 : 키가 없을 경우 = 계정 권한
     permissions =
