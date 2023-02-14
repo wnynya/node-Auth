@@ -53,6 +53,8 @@ export default class AuthAccount extends MySQLClass {
       this.gravatar = `https://www.gravatar.com/avatar/${new Crypto(
         this.email
       ).hash('md5')}`;
+    } else {
+      this.gravatar = `https://www.gravatar.com/avatar/00000000000000000000000000000000`;
     }
   }
 
