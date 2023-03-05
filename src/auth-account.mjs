@@ -250,6 +250,10 @@ export default class AuthAccount extends MySQLClass {
       single: true,
     });
 
+    if (!res) {
+      throw 'default404';
+    }
+
     const uid = res.element;
 
     if (!uid) {
