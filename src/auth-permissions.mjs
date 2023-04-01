@@ -41,7 +41,7 @@ export default class AuthPermissions extends MySQLClass {
   }
 
   add(perms) {
-    if (perms instanceof String) {
+    if (typeof perms == 'string') {
       perms = [perms];
     }
 
@@ -56,7 +56,7 @@ export default class AuthPermissions extends MySQLClass {
   }
 
   del(perms) {
-    if (perms instanceof String) {
+    if (typeof perms == 'string') {
       perms = [perms];
     }
 
