@@ -47,6 +47,7 @@ export default class AuthKey extends MySQLClass {
   async select(parts = '*') {
     await this.selectQuery(parts);
     await this.element.select(parts);
+    await this.account.select(parts);
   }
 
   async update(parts) {
